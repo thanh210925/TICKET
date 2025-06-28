@@ -1,0 +1,134 @@
+﻿@model TICKET.Models.AdminLoginViewModel
+@{
+    ViewBag.Title = "Đăng nhập Quản trị";
+}
+
+<!-- Bootstrap & Bootstrap Icons -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
+
+<style>
+    body {
+        background: linear-gradient(to right, #74ebd5, #ACB6E5);
+        font-family: 'Segoe UI', sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+
+    .login-card {
+        backdrop-filter: blur(15px);
+        background-color: rgba(255, 255, 255, 0.2);
+        border-radius: 20px;
+        padding: 40px 30px;
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        width: 100%;
+        max-width: 450px;
+        transition: transform 0.3s ease;
+    }
+
+        .login-card:hover {
+            transform: translateY(-5px);
+        }
+
+    .login-header {
+        font-weight: bold;
+        font-size: 26px;
+        color: #fff;
+        margin-bottom: 30px;
+    }
+
+    .form-label {
+        color: #fff;
+        font-weight: 500;
+        margin-bottom: 6px;
+    }
+
+    .input-group {
+        position: relative;
+        margin-bottom: 20px;
+    }
+
+        .input-group .input-group-text {
+            background-color: rgba(255, 255, 255, 0.6);
+            border: none;
+            border-radius: 10px 0 0 10px;
+            padding-left: 14px;
+            padding-right: 14px;
+        }
+
+    .form-control,
+    .form-select {
+        background-color: rgba(255, 255, 255, 0.6);
+        border: none;
+        border-radius: 0 10px 10px 0;
+        padding: 10px 15px;
+        transition: all 0.3s;
+    }
+
+        .form-control:focus,
+        .form-select:focus {
+            background-color: #fff;
+            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+        }
+
+    .btn-login {
+        background: linear-gradient(to right, #4facfe, #00f2fe);
+        border: none;
+        font-weight: bold;
+        border-radius: 10px;
+        transition: background 0.3s;
+        padding: 10px;
+        color: #000;
+    }
+
+        .btn-login:hover {
+            background: linear-gradient(to right, #00f2fe, #4facfe);
+        }
+
+    .text-danger {
+        font-size: 0.875rem;
+        margin-top: 4px;
+    }
+</style>
+
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 100vh;">
+    <div class="login-card">
+        <div class="text-center">
+            <h2 class="login-header"><i class="bi bi-shield-lock-fill me-2"></i>Đăng nhập Quản trị</h2>
+        </div>
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <!-- Email -->
+            <label class="form-label">@Html.DisplayNameFor(m => m.Email)</label>
+            <div class="input-group">
+                <span class="input-group-text"><i class="bi bi-envelope-fill"></i></span>
+                @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "Nhập email..." })
+            </div>
+            @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+
+            <!-- Password -->
+            <label class="form-label mt-3">@Html.DisplayNameFor(m => m.Password)</label>
+            <div class="input-group">
+                <span class="input-group-text"><i class="bi bi-lock-fill"></i></span>
+                @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "Nhập mật khẩu..." })
+            </div>
+            @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+
+            <!-- Role -->
+            <label class="form-label mt-3">@Html.DisplayNameFor(m => m.Role)</label>
+            <div class="input-group mb-4">
+                <span class="input-group-text"><i class="bi bi-person-badge-fill"></i></span>
+                @Html.DropDownListFor(m => m.Role, ViewBag.Roles as SelectList, "-- Chọn quyền --", new { @class = "form-select" })
+            </div>
+            @Html.ValidationMessageFor(m => m.Role, "", new { @class = "text-danger" })
+
+            <!-- Submit -->
+            <button type="submit" class="btn btn-login w-100">
+                <i class="bi bi-box-arrow-in-right me-2"></i>Đăng nhập
+            </button>
+        }
+    </div>
+</div>
